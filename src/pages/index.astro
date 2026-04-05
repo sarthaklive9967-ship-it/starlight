@@ -1,0 +1,346 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { accentPresets, playlist, projects, reasons, services, testimonials, themes, tools } from '../data/siteData';
+
+const categories = [
+  { key: 'all', label: 'All' },
+  { key: 'minecraft-server', label: 'Servers' },
+  { key: 'minecraft-plugin', label: 'Plugins' },
+  { key: 'resource-pack', label: 'Resource Packs' },
+  { key: 'discord-bot', label: 'Bots' },
+  { key: 'discord-server', label: 'Discord Dev' },
+  { key: 'custom-dev', label: 'Custom' },
+];
+---
+
+<BaseLayout>
+  <div class="bg-layers" aria-hidden="true">
+    <span class="blob b1"></span>
+    <span class="blob b2"></span>
+    <span class="blob b3"></span>
+    <span class="noise"></span>
+  </div>
+
+  <header class="site-header glass">
+    <a href="#" class="brand">AETHER<span>DEV</span></a>
+    <nav>
+      <a href="#about">About</a>
+      <a href="#services">Services</a>
+      <a href="#portfolio">Portfolio</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <button class="btn ghost" data-scroll="#contact">Work With Me</button>
+  </header>
+
+  <main>
+    <section class="hero section">
+      <div class="hero-copy reveal">
+        <p class="badge">Minecraft • Discord • Custom Development</p>
+        <h1>Premium digital systems for communities that want to feel unforgettable.</h1>
+        <p>
+          I build high-performance Minecraft servers, custom plugins, polished resource packs, Discord bots,
+          and complete community ecosystems with premium UX.
+        </p>
+        <div class="hero-actions">
+          <button class="btn" data-scroll="#portfolio">View Projects</button>
+          <button class="btn ghost" data-scroll="#contact">Start a Project</button>
+        </div>
+      </div>
+      <div class="hero-card glass reveal tilt-card">
+        <h3>Current Focus</h3>
+        <ul>
+          <li>Scalable server architecture</li>
+          <li>Cross-platform automation pipelines</li>
+          <li>Luxury-grade visual brand identity</li>
+        </ul>
+        <div class="hero-metric">
+          <span>Delivery Speed</span>
+          <strong>Fast + Precise</strong>
+        </div>
+      </div>
+    </section>
+
+    <section id="about" class="section reveal">
+      <h2>About Me</h2>
+      <div class="glass panel">
+        <p>
+          I’m a developer focused on building premium experiences across Minecraft and Discord ecosystems. From backend systems to polished UI
+          and community flows, I engineer projects that feel smooth, custom, and production-ready.
+        </p>
+      </div>
+    </section>
+
+    <section id="services" class="section">
+      <h2 class="reveal">What I Build</h2>
+      <div class="grid services-grid">
+        {services.map((service) => (
+          <article class="glass service-card reveal tilt-card">
+            <span>{service.icon}</span>
+            <h3>{service.title}</h3>
+            <p>{service.description}</p>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section id="portfolio" class="section">
+      <div class="portfolio-top reveal">
+        <h2>Featured Work</h2>
+        <div class="chip-wrap">
+          {categories.map((category) => (
+            <button class="chip" data-filter={category.key}>{category.label}</button>
+          ))}
+        </div>
+      </div>
+      <div class="grid projects-grid">
+        {projects.map((project) => (
+          <article class="glass project-card reveal tilt-card" data-category={project.category}>
+            <img src={project.image} alt={`${project.title} preview`} loading="lazy" width="1200" height="700" />
+            <div class="project-content">
+              <h3>{project.title}</h3>
+              <p>{project.description}</p>
+              <div class="tag-wrap">
+                {project.tags.map((tag) => <span>{tag}</span>)}
+              </div>
+              <div class="actions">
+                {project.links.map((link) => (
+                  <a class="btn mini" href={link.href}>{link.label}</a>
+                ))}
+              </div>
+            </div>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section class="section split">
+      <div class="glass reveal panel">
+        <h2>Skills & Tools</h2>
+        <div class="tag-wrap tools">
+          {tools.map((tool) => <span>{tool}</span>)}
+        </div>
+      </div>
+      <div class="glass reveal panel">
+        <h2>Why Choose Me</h2>
+        <ul class="reason-list">
+          {reasons.map((reason) => <li>{reason}</li>)}
+        </ul>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2 class="reveal">Testimonials</h2>
+      <div class="grid testimonials-grid">
+        {testimonials.map((item) => (
+          <blockquote class="glass reveal panel">
+            <p>“{item.quote}”</p>
+            <cite>{item.name}</cite>
+          </blockquote>
+        ))}
+      </div>
+    </section>
+
+    <section id="contact" class="section reveal">
+      <div class="glass contact panel">
+        <h2>Let’s Build Something Premium</h2>
+        <p>Contact me for Minecraft systems, Discord ecosystems, or custom development.</p>
+        <div class="actions">
+          <a class="btn" href="mailto:hello@yourbrand.dev">Email Me</a>
+          <a class="btn ghost" href="https://discord.com" target="_blank" rel="noreferrer">Discord</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <aside class="controls glass">
+    <h3>Customize</h3>
+    <div>
+      <small>Theme</small>
+      <div class="chip-wrap small">
+        {themes.map((theme) => <button class="chip tiny" data-theme={theme.key}>{theme.name}</button>)}
+      </div>
+    </div>
+    <div>
+      <small>Accent</small>
+      <div class="swatches">
+        {accentPresets.map((color) => <button class="swatch" aria-label={`Accent ${color}`} style={`--sw:${color}`} data-accent={color}></button>)}
+      </div>
+    </div>
+  </aside>
+
+  <aside class="music-player glass" id="music-player">
+    <button class="drawer-toggle" aria-label="Toggle music player">♫</button>
+    <div class="player-body">
+      <small>Now Playing</small>
+      <h4 id="track-title">{playlist[0].title}</h4>
+      <p id="track-artist">{playlist[0].artist}</p>
+      <div class="actions">
+        <button class="btn mini" id="prev-track">Prev</button>
+        <button class="btn mini" id="play-track">Play</button>
+        <button class="btn mini" id="next-track">Next</button>
+      </div>
+      <label>Volume <input id="volume-control" type="range" min="0" max="1" step="0.05" value="0.6" /></label>
+    </div>
+    <audio id="portfolio-audio" preload="none"></audio>
+  </aside>
+
+  <footer class="section footer">
+    <p>© {new Date().getFullYear()} AETHERDEV • Premium Systems & Community Engineering</p>
+    <div class="actions">
+      <a href="#">Top ↑</a>
+      <a href="#portfolio">Projects</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </footer>
+
+  <script define:vars={{ playlist }}>
+    const root = document.documentElement;
+    const mediaQueryReduced = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+    // Smooth in-view reveals
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) entry.target.classList.add('show');
+        });
+      },
+      { threshold: 0.12 },
+    );
+    document.querySelectorAll('.reveal').forEach((node) => observer.observe(node));
+
+    // Smooth nav scrolling
+    document.querySelectorAll('[data-scroll]').forEach((button) => {
+      button.addEventListener('click', () => {
+        document.querySelector(button.dataset.scroll)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    });
+
+    // Portfolio filters
+    const cards = document.querySelectorAll('.project-card');
+    document.querySelectorAll('[data-filter]').forEach((chip) => {
+      chip.addEventListener('click', () => {
+        const selected = chip.dataset.filter;
+        document.querySelectorAll('[data-filter]').forEach((c) => c.classList.remove('active'));
+        chip.classList.add('active');
+        cards.forEach((card) => {
+          const visible = selected === 'all' || card.dataset.category === selected;
+          card.style.display = visible ? 'grid' : 'none';
+        });
+      });
+    });
+    document.querySelector('[data-filter="all"]')?.classList.add('active');
+
+    // Theme + accent persistence
+    const THEME_KEY = 'portfolio-theme';
+    const ACCENT_KEY = 'portfolio-accent';
+    const MUSIC_KEY = 'portfolio-music';
+
+    const applyTheme = (theme) => root.dataset.theme = theme;
+    const applyAccent = (accent) => root.style.setProperty('--accent', accent);
+
+    const savedTheme = localStorage.getItem(THEME_KEY) || 'dark';
+    const savedAccent = localStorage.getItem(ACCENT_KEY) || '#7a7cff';
+    applyTheme(savedTheme);
+    applyAccent(savedAccent);
+
+    document.querySelectorAll('[data-theme]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const { theme } = btn.dataset;
+        applyTheme(theme);
+        localStorage.setItem(THEME_KEY, theme);
+      });
+    });
+
+    document.querySelectorAll('[data-accent]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const { accent } = btn.dataset;
+        applyAccent(accent);
+        localStorage.setItem(ACCENT_KEY, accent);
+      });
+    });
+
+    // pointer glow
+    if (!mediaQueryReduced.matches) {
+      window.addEventListener('pointermove', (event) => {
+        root.style.setProperty('--mx', `${event.clientX}px`);
+        root.style.setProperty('--my', `${event.clientY}px`);
+      }, { passive: true });
+    }
+
+    // Card tilt
+    if (!mediaQueryReduced.matches) {
+      document.querySelectorAll('.tilt-card').forEach((card) => {
+        card.addEventListener('pointermove', (event) => {
+          const rect = card.getBoundingClientRect();
+          const x = (event.clientX - rect.left) / rect.width;
+          const y = (event.clientY - rect.top) / rect.height;
+          card.style.setProperty('--rx', `${(0.5 - y) * 8}deg`);
+          card.style.setProperty('--ry', `${(x - 0.5) * 10}deg`);
+        });
+        card.addEventListener('pointerleave', () => {
+          card.style.setProperty('--rx', '0deg');
+          card.style.setProperty('--ry', '0deg');
+        });
+      });
+    }
+
+    // Music player
+    const player = document.getElementById('music-player');
+    const audio = document.getElementById('portfolio-audio');
+    const title = document.getElementById('track-title');
+    const artist = document.getElementById('track-artist');
+    const playBtn = document.getElementById('play-track');
+    const nextBtn = document.getElementById('next-track');
+    const prevBtn = document.getElementById('prev-track');
+    const volume = document.getElementById('volume-control');
+    const drawer = document.querySelector('.drawer-toggle');
+
+    let state = JSON.parse(localStorage.getItem(MUSIC_KEY) || '{"index":0,"time":0,"volume":0.6,"open":false}');
+    let index = Math.min(state.index || 0, playlist.length - 1);
+
+    const setTrack = (newIndex, keepTime = 0) => {
+      index = (newIndex + playlist.length) % playlist.length;
+      audio.src = playlist[index].src;
+      title.textContent = playlist[index].title;
+      artist.textContent = playlist[index].artist;
+      audio.currentTime = keepTime;
+      localStorage.setItem(MUSIC_KEY, JSON.stringify({ ...state, index, time: keepTime, volume: audio.volume, open: player.classList.contains('open') }));
+    };
+
+    setTrack(index, state.time || 0);
+    audio.volume = state.volume ?? 0.6;
+    volume.value = String(audio.volume);
+    player.classList.toggle('open', !!state.open);
+
+    playBtn.addEventListener('click', async () => {
+      if (audio.paused) {
+        try {
+          await audio.play();
+          playBtn.textContent = 'Pause';
+        } catch {
+          playBtn.textContent = 'Tap to allow audio';
+        }
+      } else {
+        audio.pause();
+        playBtn.textContent = 'Play';
+      }
+    });
+
+    nextBtn.addEventListener('click', () => setTrack(index + 1));
+    prevBtn.addEventListener('click', () => setTrack(index - 1));
+    audio.addEventListener('ended', () => {
+      setTrack(index + 1);
+      audio.play().catch(() => {});
+    });
+    volume.addEventListener('input', () => audio.volume = Number(volume.value));
+    drawer.addEventListener('click', () => {
+      player.classList.toggle('open');
+      localStorage.setItem(MUSIC_KEY, JSON.stringify({ ...state, index, time: audio.currentTime, volume: audio.volume, open: player.classList.contains('open') }));
+    });
+
+    setInterval(() => {
+      state = { index, time: audio.currentTime || 0, volume: audio.volume, open: player.classList.contains('open') };
+      localStorage.setItem(MUSIC_KEY, JSON.stringify(state));
+    }, 1000);
+  </script>
+</BaseLayout>

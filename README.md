@@ -1,58 +1,108 @@
-# Starlight Starter Kit: Basics
+# Premium Portfolio (Astro + Netlify)
 
-[![Built with Starlight](https://astro.badg.es/v2/built-with-starlight/tiny.svg)](https://starlight.astro.build)
+A premium, futuristic, liquid-glass personal portfolio template focused on:
 
-```
-npm create astro@latest -- --template starlight
-```
+- Minecraft server/plugin/resource pack development
+- Discord bot + server ecosystem development
+- Custom software projects
 
-<!-- ASTRO:REMOVE:START -->
+Built as a static-friendly Astro site for smooth Netlify deployment and high performance.
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/withastro/starlight/tree/main/examples/basics)
-[![Open with CodeSandbox](https://assets.codesandbox.io/github/button-edit-lime.svg)](https://codesandbox.io/p/sandbox/github/withastro/starlight/tree/main/examples/basics)
-[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/withastro/starlight&create_from_path=examples/basics)
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fwithastro%2Fstarlight%2Ftree%2Fmain%2Fexamples%2Fbasics&project-name=my-starlight-docs&repository-name=my-starlight-docs)
+## Stack
 
-<!-- ASTRO:REMOVE:END -->
+- Astro 5 (frontend-only/static build)
+- Vanilla CSS + JS (no heavy animation library overhead)
+- Data-driven content with editable TypeScript data files
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+## Run locally
 
-## 🚀 Project Structure
-
-Inside of your Astro + Starlight project, you'll see the following folders and files:
-
-```
-.
-├── public/
-├── src/
-│   ├── assets/
-│   ├── content/
-│   │   └── docs/
-│   └── content.config.ts
-├── astro.config.mjs
-├── package.json
-└── tsconfig.json
+```bash
+npm install
+npm run dev
 ```
 
-Starlight looks for `.md` or `.mdx` files in the `src/content/docs/` directory. Each file is exposed as a route based on its file name.
+Open `http://localhost:4321`.
 
-Images can be added to `src/assets/` and embedded in Markdown with a relative link.
+## Production build
 
-Static assets, like favicons, can be placed in the `public/` directory.
+```bash
+npm run build
+npm run preview
+```
 
-## 🧞 Commands
+## Customize content quickly
 
-All commands are run from the root of the project, from a terminal:
+Main content file:
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+- `src/data/siteData.ts`
 
-## 👀 Want to learn more?
+Edit these arrays:
 
-Check out [Starlight’s docs](https://starlight.astro.build/), read [the Astro documentation](https://docs.astro.build), or jump into the [Astro Discord server](https://astro.build/chat).
+- `services` → service cards
+- `projects` → featured portfolio cards + categories + links
+- `tools` → skills/tags list
+- `reasons` → “Why choose me” bullets
+- `testimonials` → reviews section
+- `themes` + `accentPresets` → theme + color controls
+- `playlist` → music tracks and metadata
+
+## Music playlist notes
+
+Default tracks point to:
+
+- `/public/music/neon-drift.mp3`
+- `/public/music/liquid-pulse.mp3`
+- `/public/music/afterglow.mp3`
+
+Add your own MP3 files in `public/music/` and update `playlist` in `src/data/siteData.ts`.
+Autoplay restrictions are handled: user interaction is required before guaranteed playback.
+
+## Fonts
+
+Configured in `src/layouts/BaseLayout.astro` via Google Fonts:
+
+- Space Grotesk (headings)
+- Outfit (body)
+
+Change or self-host fonts there for full branding control.
+
+## Theme system
+
+Theme + accent selections are saved in `localStorage`:
+
+- `portfolio-theme`
+- `portfolio-accent`
+
+Theme behavior and palette tokens are managed in `src/styles/global.css`.
+
+## Netlify deployment
+
+### Option A: Connect repository
+
+1. Push this project to GitHub/GitLab/Bitbucket.
+2. In Netlify, **Add new site** → **Import an existing project**.
+3. Build settings:
+   - Build command: `npm run build`
+   - Publish directory: `dist`
+4. Deploy.
+
+### Option B: Netlify CLI
+
+```bash
+npm run build
+npx netlify deploy --prod --dir=dist
+```
+
+## SEO / social metadata
+
+Meta tags, OG tags, and Twitter card basics are configured in:
+
+- `src/layouts/BaseLayout.astro`
+
+Replace the `site` URL in `astro.config.mjs` and OG image path with your real brand domain/assets.
+
+## Notes
+
+- The portfolio is responsive for mobile/tablet/laptop/desktop.
+- Animations are optimized and reduced when users prefer reduced motion.
+- Replace placeholder images in `public/images/` with your real project previews.
