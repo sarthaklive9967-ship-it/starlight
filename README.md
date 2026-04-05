@@ -1,27 +1,21 @@
-# Premium Portfolio (Astro + Netlify)
+# Premium Astro Portfolio (Static + Netlify)
 
-A premium, futuristic, liquid-glass personal portfolio template focused on:
+A fully static, Netlify-compatible Astro portfolio website with premium liquid-glass UI, responsive layouts, theme/accent customization, smooth animations, and a built-in music player.
 
-- Minecraft server/plugin/resource pack development
-- Discord bot + server ecosystem development
-- Custom software projects
+## Tech
 
-Built as a static-friendly Astro site for smooth Netlify deployment and high performance.
+- Astro (no Starlight, no docs template, no content collections)
+- Vanilla CSS + JS (performance-focused)
+- Static output (`dist`)
 
-## Stack
-
-- Astro 5 (frontend-only/static build)
-- Vanilla CSS + JS (no heavy animation library overhead)
-- Data-driven content with editable TypeScript data files
-
-## Run locally
+## Local development
 
 ```bash
 npm install
 npm run dev
 ```
 
-Open `http://localhost:4321`.
+Open: `http://localhost:4321`
 
 ## Production build
 
@@ -30,79 +24,50 @@ npm run build
 npm run preview
 ```
 
-## Customize content quickly
+## Netlify deployment
 
-Main content file:
+This project is preconfigured for Netlify:
+
+- Build command: `npm run build`
+- Publish directory: `dist`
+
+These are defined in `netlify.toml`.
+
+## Customization guide
+
+### 1) Edit portfolio content
+Update:
 
 - `src/data/siteData.ts`
 
-Edit these arrays:
+You can edit:
 
-- `services` → service cards
-- `projects` → featured portfolio cards + categories + links
-- `tools` → skills/tags list
-- `reasons` → “Why choose me” bullets
-- `testimonials` → reviews section
-- `themes` + `accentPresets` → theme + color controls
-- `playlist` → music tracks and metadata
+- Hero/profile text
+- Services
+- Project cards and categories
+- Skills/tools
+- Testimonials
+- Themes and accent presets
+- Music playlist
 
-## Music playlist notes
+### 2) Change colors and effects
+Update CSS tokens and components in:
 
-Default tracks point to:
+- `src/styles/global.css`
 
-- `/public/music/neon-drift.mp3`
-- `/public/music/liquid-pulse.mp3`
-- `/public/music/afterglow.mp3`
-
-Add your own MP3 files in `public/music/` and update `playlist` in `src/data/siteData.ts`.
-Autoplay restrictions are handled: user interaction is required before guaranteed playback.
-
-## Fonts
-
-Configured in `src/layouts/BaseLayout.astro` via Google Fonts:
-
-- Space Grotesk (headings)
-- Outfit (body)
-
-Change or self-host fonts there for full branding control.
-
-## Theme system
-
-Theme + accent selections are saved in `localStorage`:
-
-- `portfolio-theme`
-- `portfolio-accent`
-
-Theme behavior and palette tokens are managed in `src/styles/global.css`.
-
-## Netlify deployment
-
-### Option A: Connect repository
-
-1. Push this project to GitHub/GitLab/Bitbucket.
-2. In Netlify, **Add new site** → **Import an existing project**.
-3. Build settings:
-   - Build command: `npm run build`
-   - Publish directory: `dist`
-4. Deploy.
-
-### Option B: Netlify CLI
-
-```bash
-npm run build
-npx netlify deploy --prod --dir=dist
-```
-
-## SEO / social metadata
-
-Meta tags, OG tags, and Twitter card basics are configured in:
+### 3) Change fonts
+Update font import in:
 
 - `src/layouts/BaseLayout.astro`
 
-Replace the `site` URL in `astro.config.mjs` and OG image path with your real brand domain/assets.
+### 4) Add your own music tracks
+Place MP3 files in `public/music/` and update playlist `src` values in `src/data/siteData.ts`.
 
-## Notes
+## Project structure
 
-- The portfolio is responsive for mobile/tablet/laptop/desktop.
-- Animations are optimized and reduced when users prefer reduced motion.
-- Replace placeholder images in `public/images/` with your real project previews.
+- `src/pages/index.astro` → main homepage
+- `src/layouts/BaseLayout.astro` → SEO/meta/fonts/base HTML
+- `src/data/siteData.ts` → editable site data
+- `src/styles/global.css` → design system + animations + responsive styles
+- `netlify.toml` → build/publish settings
+

@@ -1,111 +1,87 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { accentPresets, playlist, projects, reasons, services, testimonials, themes, tools } from '../data/siteData';
-
-const categories = [
-  { key: 'all', label: 'All' },
-  { key: 'minecraft-server', label: 'Servers' },
-  { key: 'minecraft-plugin', label: 'Plugins' },
-  { key: 'resource-pack', label: 'Resource Packs' },
-  { key: 'discord-bot', label: 'Bots' },
-  { key: 'discord-server', label: 'Discord Dev' },
-  { key: 'custom-dev', label: 'Custom' },
-];
+import { accents, categories, nav, playlist, profile, projects, reasons, services, testimonials, themes, tools } from '../data/siteData';
 ---
 
 <BaseLayout>
-  <div class="bg-layers" aria-hidden="true">
-    <span class="blob b1"></span>
-    <span class="blob b2"></span>
-    <span class="blob b3"></span>
-    <span class="noise"></span>
+  <div class="liquid-bg" aria-hidden="true">
+    <span class="orb orb-a"></span>
+    <span class="orb orb-b"></span>
+    <span class="orb orb-c"></span>
   </div>
 
-  <header class="site-header glass">
-    <a href="#" class="brand">AETHER<span>DEV</span></a>
+  <header class="header glass">
+    <a href="#" class="brand">{profile.brand}</a>
     <nav>
-      <a href="#about">About</a>
-      <a href="#services">Services</a>
-      <a href="#portfolio">Portfolio</a>
-      <a href="#contact">Contact</a>
+      {nav.map((item) => <a href={item.href}>{item.label}</a>)}
     </nav>
-    <button class="btn ghost" data-scroll="#contact">Work With Me</button>
+    <button class="btn ghost" data-scroll="#contact">Hire Me</button>
   </header>
 
   <main>
     <section class="hero section">
       <div class="hero-copy reveal">
-        <p class="badge">Minecraft • Discord • Custom Development</p>
-        <h1>Premium digital systems for communities that want to feel unforgettable.</h1>
-        <p>
-          I build high-performance Minecraft servers, custom plugins, polished resource packs, Discord bots,
-          and complete community ecosystems with premium UX.
-        </p>
-        <div class="hero-actions">
-          <button class="btn" data-scroll="#portfolio">View Projects</button>
-          <button class="btn ghost" data-scroll="#contact">Start a Project</button>
+        <p class="pill">{profile.badge}</p>
+        <h1>{profile.headline}</h1>
+        <p>{profile.subheadline}</p>
+        <div class="actions">
+          <button class="btn" data-scroll="#portfolio">Explore Work</button>
+          <button class="btn ghost" data-scroll="#contact">Start Project</button>
         </div>
       </div>
-      <div class="hero-card glass reveal tilt-card">
-        <h3>Current Focus</h3>
+      <div class="hero-panel glass reveal tilt">
+        <p class="muted">Current Role</p>
+        <h3>{profile.role}</h3>
         <ul>
-          <li>Scalable server architecture</li>
-          <li>Cross-platform automation pipelines</li>
-          <li>Luxury-grade visual brand identity</li>
+          <li>Premium quality delivery</li>
+          <li>Performance-first engineering</li>
+          <li>Custom system architecture</li>
         </ul>
-        <div class="hero-metric">
-          <span>Delivery Speed</span>
-          <strong>Fast + Precise</strong>
-        </div>
       </div>
     </section>
 
     <section id="about" class="section reveal">
       <h2>About Me</h2>
-      <div class="glass panel">
+      <article class="glass card">
         <p>
-          I’m a developer focused on building premium experiences across Minecraft and Discord ecosystems. From backend systems to polished UI
-          and community flows, I engineer projects that feel smooth, custom, and production-ready.
+          I help communities and studios build modern, scalable ecosystems across Minecraft and Discord. I focus on premium UX,
+          robust system design, and polished implementation that feels memorable and professional.
         </p>
-      </div>
+      </article>
     </section>
 
     <section id="services" class="section">
       <h2 class="reveal">What I Build</h2>
-      <div class="grid services-grid">
-        {services.map((service) => (
-          <article class="glass service-card reveal tilt-card">
-            <span>{service.icon}</span>
-            <h3>{service.title}</h3>
-            <p>{service.description}</p>
+      <div class="service-grid">
+        {services.map((item) => (
+          <article class="glass card reveal tilt">
+            <strong>{item.icon} {item.title}</strong>
+            <p>{item.desc}</p>
           </article>
         ))}
       </div>
     </section>
 
     <section id="portfolio" class="section">
-      <div class="portfolio-top reveal">
+      <div class="portfolio-head reveal">
         <h2>Featured Work</h2>
-        <div class="chip-wrap">
-          {categories.map((category) => (
-            <button class="chip" data-filter={category.key}>{category.label}</button>
-          ))}
+        <div class="chip-row">
+          {categories.map((category) => <button class="chip" data-filter={category.id}>{category.label}</button>)}
         </div>
       </div>
-      <div class="grid projects-grid">
+      <div class="project-grid">
         {projects.map((project) => (
-          <article class="glass project-card reveal tilt-card" data-category={project.category}>
+          <article class="glass project reveal tilt" data-category={project.category}>
             <img src={project.image} alt={`${project.title} preview`} loading="lazy" width="1200" height="700" />
-            <div class="project-content">
+            <div class="content">
               <h3>{project.title}</h3>
-              <p>{project.description}</p>
-              <div class="tag-wrap">
+              <p>{project.summary}</p>
+              <div class="tags">
                 {project.tags.map((tag) => <span>{tag}</span>)}
               </div>
               <div class="actions">
-                {project.links.map((link) => (
-                  <a class="btn mini" href={link.href}>{link.label}</a>
-                ))}
+                <a class="btn small" href="#contact">Details</a>
+                <a class="btn ghost small" href="#contact">Contact</a>
               </div>
             </div>
           </article>
@@ -114,25 +90,25 @@ const categories = [
     </section>
 
     <section class="section split">
-      <div class="glass reveal panel">
-        <h2>Skills & Tools</h2>
-        <div class="tag-wrap tools">
+      <article class="glass card reveal">
+        <h2>Skills / Tools</h2>
+        <div class="tags">
           {tools.map((tool) => <span>{tool}</span>)}
         </div>
-      </div>
-      <div class="glass reveal panel">
+      </article>
+      <article class="glass card reveal">
         <h2>Why Choose Me</h2>
-        <ul class="reason-list">
+        <ul>
           {reasons.map((reason) => <li>{reason}</li>)}
         </ul>
-      </div>
+      </article>
     </section>
 
     <section class="section">
       <h2 class="reveal">Testimonials</h2>
-      <div class="grid testimonials-grid">
+      <div class="testimonial-grid">
         {testimonials.map((item) => (
-          <blockquote class="glass reveal panel">
+          <blockquote class="glass card reveal">
             <p>“{item.quote}”</p>
             <cite>{item.name}</cite>
           </blockquote>
@@ -141,141 +117,125 @@ const categories = [
     </section>
 
     <section id="contact" class="section reveal">
-      <div class="glass contact panel">
-        <h2>Let’s Build Something Premium</h2>
-        <p>Contact me for Minecraft systems, Discord ecosystems, or custom development.</p>
-        <div class="actions">
-          <a class="btn" href="mailto:hello@yourbrand.dev">Email Me</a>
+      <article class="glass card contact-card">
+        <h2>Let’s build your next premium project.</h2>
+        <p>For Minecraft, Discord, and custom development work, reach out and let’s map your vision.</p>
+        <div class="actions center">
+          <a class="btn" href="mailto:hello@yourbrand.dev">Email</a>
           <a class="btn ghost" href="https://discord.com" target="_blank" rel="noreferrer">Discord</a>
         </div>
-      </div>
+      </article>
     </section>
   </main>
 
-  <aside class="controls glass">
+  <aside class="customizer glass">
     <h3>Customize</h3>
-    <div>
-      <small>Theme</small>
-      <div class="chip-wrap small">
-        {themes.map((theme) => <button class="chip tiny" data-theme={theme.key}>{theme.name}</button>)}
-      </div>
+    <small>Theme</small>
+    <div class="chip-row">
+      {themes.map((theme) => <button class="chip" data-theme={theme.key}>{theme.name}</button>)}
     </div>
-    <div>
-      <small>Accent</small>
-      <div class="swatches">
-        {accentPresets.map((color) => <button class="swatch" aria-label={`Accent ${color}`} style={`--sw:${color}`} data-accent={color}></button>)}
-      </div>
+    <small>Accent</small>
+    <div class="swatches">
+      {accents.map((accent) => <button class="swatch" style={`--sw:${accent}`} data-accent={accent} aria-label={`Accent ${accent}`}></button>)}
     </div>
   </aside>
 
-  <aside class="music-player glass" id="music-player">
-    <button class="drawer-toggle" aria-label="Toggle music player">♫</button>
-    <div class="player-body">
+  <aside class="player glass" id="player">
+    <button class="toggle" aria-label="Toggle music">♫ Music</button>
+    <div class="drawer">
       <small>Now Playing</small>
       <h4 id="track-title">{playlist[0].title}</h4>
       <p id="track-artist">{playlist[0].artist}</p>
       <div class="actions">
-        <button class="btn mini" id="prev-track">Prev</button>
-        <button class="btn mini" id="play-track">Play</button>
-        <button class="btn mini" id="next-track">Next</button>
+        <button id="prev" class="btn small">Prev</button>
+        <button id="play" class="btn small">Play</button>
+        <button id="next" class="btn small">Next</button>
       </div>
-      <label>Volume <input id="volume-control" type="range" min="0" max="1" step="0.05" value="0.6" /></label>
+      <label for="vol">Volume</label>
+      <input id="vol" type="range" min="0" max="1" step="0.05" value="0.65" />
     </div>
-    <audio id="portfolio-audio" preload="none"></audio>
+    <audio id="audio" preload="none"></audio>
   </aside>
 
-  <footer class="section footer">
-    <p>© {new Date().getFullYear()} AETHERDEV • Premium Systems & Community Engineering</p>
-    <div class="actions">
-      <a href="#">Top ↑</a>
-      <a href="#portfolio">Projects</a>
-      <a href="#contact">Contact</a>
-    </div>
+  <footer class="footer section">
+    <p>© {new Date().getFullYear()} {profile.brand}. All rights reserved.</p>
+    <a href="#">Back to top ↑</a>
   </footer>
 
   <script define:vars={{ playlist }}>
     const root = document.documentElement;
-    const mediaQueryReduced = window.matchMedia('(prefers-reduced-motion: reduce)');
 
-    // Smooth in-view reveals
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) entry.target.classList.add('show');
-        });
-      },
-      { threshold: 0.12 },
-    );
-    document.querySelectorAll('.reveal').forEach((node) => observer.observe(node));
+    // Section reveal
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => entry.isIntersecting && entry.target.classList.add('in'));
+    }, { threshold: 0.15 });
+    document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
 
-    // Smooth nav scrolling
-    document.querySelectorAll('[data-scroll]').forEach((button) => {
-      button.addEventListener('click', () => {
-        document.querySelector(button.dataset.scroll)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    // Smooth scroll triggers
+    document.querySelectorAll('[data-scroll]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        document.querySelector(btn.dataset.scroll)?.scrollIntoView({ behavior: 'smooth' });
       });
     });
 
     // Portfolio filters
-    const cards = document.querySelectorAll('.project-card');
-    document.querySelectorAll('[data-filter]').forEach((chip) => {
-      chip.addEventListener('click', () => {
-        const selected = chip.dataset.filter;
-        document.querySelectorAll('[data-filter]').forEach((c) => c.classList.remove('active'));
-        chip.classList.add('active');
-        cards.forEach((card) => {
-          const visible = selected === 'all' || card.dataset.category === selected;
-          card.style.display = visible ? 'grid' : 'none';
+    const filterButtons = document.querySelectorAll('[data-filter]');
+    const projectCards = document.querySelectorAll('.project');
+    filterButtons.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        filterButtons.forEach((item) => item.classList.remove('active'));
+        btn.classList.add('active');
+        const selected = btn.dataset.filter;
+        projectCards.forEach((card) => {
+          const show = selected === 'all' || card.dataset.category === selected;
+          card.style.display = show ? 'grid' : 'none';
         });
       });
     });
     document.querySelector('[data-filter="all"]')?.classList.add('active');
 
-    // Theme + accent persistence
-    const THEME_KEY = 'portfolio-theme';
-    const ACCENT_KEY = 'portfolio-accent';
-    const MUSIC_KEY = 'portfolio-music';
+    // Theme + accent
+    const THEME_KEY = 'theme-key';
+    const ACCENT_KEY = 'accent-key';
 
-    const applyTheme = (theme) => root.dataset.theme = theme;
-    const applyAccent = (accent) => root.style.setProperty('--accent', accent);
+    const applyTheme = (theme) => { root.dataset.theme = theme; };
+    const applyAccent = (accent) => { root.style.setProperty('--accent', accent); };
 
-    const savedTheme = localStorage.getItem(THEME_KEY) || 'dark';
-    const savedAccent = localStorage.getItem(ACCENT_KEY) || '#7a7cff';
-    applyTheme(savedTheme);
-    applyAccent(savedAccent);
+    applyTheme(localStorage.getItem(THEME_KEY) || 'dark');
+    applyAccent(localStorage.getItem(ACCENT_KEY) || '#7a7cff');
 
     document.querySelectorAll('[data-theme]').forEach((btn) => {
       btn.addEventListener('click', () => {
-        const { theme } = btn.dataset;
-        applyTheme(theme);
-        localStorage.setItem(THEME_KEY, theme);
+        const next = btn.dataset.theme;
+        applyTheme(next);
+        localStorage.setItem(THEME_KEY, next);
       });
     });
 
     document.querySelectorAll('[data-accent]').forEach((btn) => {
       btn.addEventListener('click', () => {
-        const { accent } = btn.dataset;
-        applyAccent(accent);
-        localStorage.setItem(ACCENT_KEY, accent);
+        const next = btn.dataset.accent;
+        applyAccent(next);
+        localStorage.setItem(ACCENT_KEY, next);
       });
     });
 
-    // pointer glow
-    if (!mediaQueryReduced.matches) {
-      window.addEventListener('pointermove', (event) => {
-        root.style.setProperty('--mx', `${event.clientX}px`);
-        root.style.setProperty('--my', `${event.clientY}px`);
-      }, { passive: true });
-    }
+    // Subtle mouse glow
+    window.addEventListener('pointermove', (event) => {
+      root.style.setProperty('--mx', `${event.clientX}px`);
+      root.style.setProperty('--my', `${event.clientY}px`);
+    }, { passive: true });
 
     // Card tilt
-    if (!mediaQueryReduced.matches) {
-      document.querySelectorAll('.tilt-card').forEach((card) => {
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!reducedMotion) {
+      document.querySelectorAll('.tilt').forEach((card) => {
         card.addEventListener('pointermove', (event) => {
           const rect = card.getBoundingClientRect();
-          const x = (event.clientX - rect.left) / rect.width;
-          const y = (event.clientY - rect.top) / rect.height;
-          card.style.setProperty('--rx', `${(0.5 - y) * 8}deg`);
-          card.style.setProperty('--ry', `${(x - 0.5) * 10}deg`);
+          const x = (event.clientX - rect.left) / rect.width - 0.5;
+          const y = (event.clientY - rect.top) / rect.height - 0.5;
+          card.style.setProperty('--rx', `${-y * 8}deg`);
+          card.style.setProperty('--ry', `${x * 9}deg`);
         });
         card.addEventListener('pointerleave', () => {
           card.style.setProperty('--rx', '0deg');
@@ -285,62 +245,70 @@ const categories = [
     }
 
     // Music player
-    const player = document.getElementById('music-player');
-    const audio = document.getElementById('portfolio-audio');
+    const stateKey = 'music-state';
+    const player = document.getElementById('player');
+    const drawerToggle = player.querySelector('.toggle');
+    const audio = document.getElementById('audio');
     const title = document.getElementById('track-title');
     const artist = document.getElementById('track-artist');
-    const playBtn = document.getElementById('play-track');
-    const nextBtn = document.getElementById('next-track');
-    const prevBtn = document.getElementById('prev-track');
-    const volume = document.getElementById('volume-control');
-    const drawer = document.querySelector('.drawer-toggle');
+    const play = document.getElementById('play');
+    const prev = document.getElementById('prev');
+    const next = document.getElementById('next');
+    const vol = document.getElementById('vol');
 
-    let state = JSON.parse(localStorage.getItem(MUSIC_KEY) || '{"index":0,"time":0,"volume":0.6,"open":false}');
+    let state = JSON.parse(localStorage.getItem(stateKey) || '{"index":0,"time":0,"volume":0.65,"open":false}');
     let index = Math.min(state.index || 0, playlist.length - 1);
 
-    const setTrack = (newIndex, keepTime = 0) => {
+    const loadTrack = (newIndex, seek = 0) => {
       index = (newIndex + playlist.length) % playlist.length;
       audio.src = playlist[index].src;
+      audio.currentTime = seek;
       title.textContent = playlist[index].title;
       artist.textContent = playlist[index].artist;
-      audio.currentTime = keepTime;
-      localStorage.setItem(MUSIC_KEY, JSON.stringify({ ...state, index, time: keepTime, volume: audio.volume, open: player.classList.contains('open') }));
     };
 
-    setTrack(index, state.time || 0);
-    audio.volume = state.volume ?? 0.6;
-    volume.value = String(audio.volume);
-    player.classList.toggle('open', !!state.open);
+    loadTrack(index, state.time || 0);
+    audio.volume = state.volume ?? 0.65;
+    vol.value = String(audio.volume);
+    player.classList.toggle('open', Boolean(state.open));
 
-    playBtn.addEventListener('click', async () => {
+    drawerToggle.addEventListener('click', () => {
+      player.classList.toggle('open');
+      state.open = player.classList.contains('open');
+      localStorage.setItem(stateKey, JSON.stringify({ ...state, index, time: audio.currentTime, volume: audio.volume }));
+    });
+
+    play.addEventListener('click', async () => {
       if (audio.paused) {
         try {
           await audio.play();
-          playBtn.textContent = 'Pause';
+          play.textContent = 'Pause';
         } catch {
-          playBtn.textContent = 'Tap to allow audio';
+          play.textContent = 'Tap to enable';
         }
       } else {
         audio.pause();
-        playBtn.textContent = 'Play';
+        play.textContent = 'Play';
       }
     });
 
-    nextBtn.addEventListener('click', () => setTrack(index + 1));
-    prevBtn.addEventListener('click', () => setTrack(index - 1));
+    next.addEventListener('click', () => loadTrack(index + 1));
+    prev.addEventListener('click', () => loadTrack(index - 1));
     audio.addEventListener('ended', () => {
-      setTrack(index + 1);
+      loadTrack(index + 1);
       audio.play().catch(() => {});
     });
-    volume.addEventListener('input', () => audio.volume = Number(volume.value));
-    drawer.addEventListener('click', () => {
-      player.classList.toggle('open');
-      localStorage.setItem(MUSIC_KEY, JSON.stringify({ ...state, index, time: audio.currentTime, volume: audio.volume, open: player.classList.contains('open') }));
+    vol.addEventListener('input', () => {
+      audio.volume = Number(vol.value);
     });
 
     setInterval(() => {
-      state = { index, time: audio.currentTime || 0, volume: audio.volume, open: player.classList.contains('open') };
-      localStorage.setItem(MUSIC_KEY, JSON.stringify(state));
+      localStorage.setItem(stateKey, JSON.stringify({
+        index,
+        time: audio.currentTime || 0,
+        volume: audio.volume,
+        open: player.classList.contains('open'),
+      }));
     }, 1000);
   </script>
 </BaseLayout>
