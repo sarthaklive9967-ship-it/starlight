@@ -1,58 +1,105 @@
-# Starlight Starter Kit: Basics
+# Premium Astro Portfolio (Static + Netlify)
 
-[![Built with Starlight](https://astro.badg.es/v2/built-with-starlight/tiny.svg)](https://starlight.astro.build)
+A fully static, Netlify-compatible Astro portfolio website with premium liquid-glass UI, responsive layouts, theme/accent customization, smooth animations, and a built-in music player.
 
-```
-npm create astro@latest -- --template starlight
-```
+## Tech
 
-<!-- ASTRO:REMOVE:START -->
+- Astro (plain portfolio setup, no docs/content collections)
+- Vanilla CSS + JS (performance-focused)
+- Static output (`dist`)
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/withastro/starlight/tree/main/examples/basics)
-[![Open with CodeSandbox](https://assets.codesandbox.io/github/button-edit-lime.svg)](https://codesandbox.io/p/sandbox/github/withastro/starlight/tree/main/examples/basics)
-[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/withastro/starlight&create_from_path=examples/basics)
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fwithastro%2Fstarlight%2Ftree%2Fmain%2Fexamples%2Fbasics&project-name=my-starlight-docs&repository-name=my-starlight-docs)
+## Local development
 
-<!-- ASTRO:REMOVE:END -->
-
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
-
-## 🚀 Project Structure
-
-Inside of your Astro + Starlight project, you'll see the following folders and files:
-
-```
-.
-├── public/
-├── src/
-│   ├── assets/
-│   ├── content/
-│   │   └── docs/
-│   └── content.config.ts
-├── astro.config.mjs
-├── package.json
-└── tsconfig.json
+```bash
+npm install
+npm run dev
 ```
 
-Starlight looks for `.md` or `.mdx` files in the `src/content/docs/` directory. Each file is exposed as a route based on its file name.
+Open: `http://localhost:4321`
 
-Images can be added to `src/assets/` and embedded in Markdown with a relative link.
+## Production build
 
-Static assets, like favicons, can be placed in the `public/` directory.
+```bash
+npm run build
+npm run preview
+```
 
-## 🧞 Commands
+## Netlify deployment
 
-All commands are run from the root of the project, from a terminal:
+This project is preconfigured for Netlify:
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+- Build command: `npm run build`
+- Publish directory: `dist`
 
-## 👀 Want to learn more?
+These are defined in `netlify.toml`.
 
-Check out [Starlight’s docs](https://starlight.astro.build/), read [the Astro documentation](https://docs.astro.build), or jump into the [Astro Discord server](https://astro.build/chat).
+## Customization guide
+
+### 1) Edit portfolio content
+Update:
+
+- `src/data/siteData.ts`
+
+You can edit:
+
+- Hero/profile text
+- Services
+- Project cards and categories
+- Skills/tools
+- Testimonials
+- Themes and accent presets
+- Music playlist
+
+### 2) Change colors and effects
+Update CSS tokens and components in:
+
+- `src/styles/global.css`
+
+### 3) Change fonts
+Update font import in:
+
+- `src/layouts/BaseLayout.astro`
+
+### 4) Add your own music tracks
+Place MP3 files in `public/music/` and update playlist `src` values in `src/data/siteData.ts`.
+
+## Project structure
+
+- `src/pages/index.astro` → main homepage
+- `src/layouts/BaseLayout.astro` → SEO/meta/fonts/base HTML
+- `src/data/siteData.ts` → editable site data
+- `src/styles/global.css` → design system + animations + responsive styles
+- `netlify.toml` → build/publish settings
+
+---
+
+## Exactly what to upload to GitHub
+
+Upload the full repository **except** dependency/build folders (`node_modules`, `dist`) and local editor/cache files.
+
+At minimum, keep these files/folders:
+
+- `package.json`
+- `astro.config.mjs`
+- `netlify.toml`
+- `tsconfig.json`
+- `README.md`
+- `public/favicon.svg`
+- `public/images/` (all project preview assets)
+- `public/music/.gitkeep` (or your real music files)
+- `src/pages/index.astro`
+- `src/layouts/BaseLayout.astro`
+- `src/data/siteData.ts`
+- `src/styles/global.css`
+- `.gitignore`
+
+## Legacy docs-template files that must be deleted
+
+If any of these still exist in your repo/history branch, delete them:
+
+- `src/content.config.ts`
+- `src/content/**` (all docs markdown/mdx files)
+- Any docs-template integration/dependency in `package.json`
+- Any docs-template integration code in `astro.config.mjs`
+
+This project should have **no docs routes** and **no docs collections**.
