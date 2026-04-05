@@ -4,7 +4,7 @@ A fully static, Netlify-compatible Astro portfolio website with premium liquid-g
 
 ## Tech
 
-- Astro (no Starlight, no docs template, no content collections)
+- Astro (plain portfolio setup, no docs/content collections)
 - Vanilla CSS + JS (performance-focused)
 - Static output (`dist`)
 
@@ -86,19 +86,20 @@ At minimum, keep these files/folders:
 - `README.md`
 - `public/favicon.svg`
 - `public/images/` (all project preview assets)
+- `public/music/.gitkeep` (or your real music files)
 - `src/pages/index.astro`
 - `src/layouts/BaseLayout.astro`
 - `src/data/siteData.ts`
 - `src/styles/global.css`
 - `.gitignore`
 
-## Old Starlight files that must be deleted
+## Legacy docs-template files that must be deleted
 
 If any of these still exist in your repo/history branch, delete them:
 
 - `src/content.config.ts`
 - `src/content/**` (all docs markdown/mdx files)
-- Any `@astrojs/starlight` dependency in `package.json`
-- Any Starlight integration code in `astro.config.mjs`
+- Any docs-template integration/dependency in `package.json`
+- Any docs-template integration code in `astro.config.mjs`
 
-This project should have **no docs routes**, **no docs collections**, and **no Starlight dependency**.
+This project should have **no docs routes** and **no docs collections**.
