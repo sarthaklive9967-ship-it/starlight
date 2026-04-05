@@ -71,3 +71,34 @@ Place MP3 files in `public/music/` and update playlist `src` values in `src/data
 - `src/styles/global.css` → design system + animations + responsive styles
 - `netlify.toml` → build/publish settings
 
+---
+
+## Exactly what to upload to GitHub
+
+Upload the full repository **except** dependency/build folders (`node_modules`, `dist`) and local editor/cache files.
+
+At minimum, keep these files/folders:
+
+- `package.json`
+- `astro.config.mjs`
+- `netlify.toml`
+- `tsconfig.json`
+- `README.md`
+- `public/favicon.svg`
+- `public/images/` (all project preview assets)
+- `src/pages/index.astro`
+- `src/layouts/BaseLayout.astro`
+- `src/data/siteData.ts`
+- `src/styles/global.css`
+- `.gitignore`
+
+## Old Starlight files that must be deleted
+
+If any of these still exist in your repo/history branch, delete them:
+
+- `src/content.config.ts`
+- `src/content/**` (all docs markdown/mdx files)
+- Any `@astrojs/starlight` dependency in `package.json`
+- Any Starlight integration code in `astro.config.mjs`
+
+This project should have **no docs routes**, **no docs collections**, and **no Starlight dependency**.
