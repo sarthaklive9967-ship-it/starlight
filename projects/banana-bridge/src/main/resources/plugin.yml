@@ -1,0 +1,13 @@
+name: BananaBridge
+version: 0.1.0
+main: com.banana.bridge.BananaBridgePlugin
+api-version: '1.21'
+authors: [Banana Team]
+description: Optional server-side integration plugin for Banana Client.
+commands:
+  bananabridge:
+    description: Bridge diagnostics and profile sync status.
+    usage: /bananabridge
+permissions:
+  bananabridge.admin:
+    default: op
