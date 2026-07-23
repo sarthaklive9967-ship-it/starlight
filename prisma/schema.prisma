@@ -1,0 +1,11 @@
+generator client { provider = "prisma-client-js" }
+datasource db { provider = "postgresql" url = env("DATABASE_URL") }
+
+enum Role { USER ADMIN }
+enum QrStatus { ACTIVE EXPIRED PASSWORD_PROTECTED DISABLED }
+
+model User { id String @id @default(cuid()) email String @unique name String? image String? role Role @default(USER) createdAt DateTime @default(now()) qrCodes QrCode[] apiKeys ApiKey[] auditLogs AuditLog[] }
+model QrCode { id String @id @default(cuid()) ownerId String? owner User? @relation(fields:[ownerId], references:[id], onDelete:SetNull) title String kind String content String options Json status QrStatus @default(ACTIVE) passwordHash String? expiresAt DateTime? isFavorite Boolean @default(false) scans Scan[] createdAt DateTime @default(now()) updatedAt DateTime @updatedAt }
+model Scan { id String @id @default(cuid()) qrCodeId String qrCode QrCode @relation(fields:[qrCodeId], references:[id], onDelete:Cascade) country String? city String? device String? referrer String? ipHash String? createdAt DateTime @default(now()) }
+model ApiKey { id String @id @default(cuid()) userId String user User @relation(fields:[userId], references:[id], onDelete:Cascade) name String keyHash String @unique lastUsedAt DateTime? createdAt DateTime @default(now()) revokedAt DateTime? }
+model AuditLog { id String @id @default(cuid()) actorId String? actor User? @relation(fields:[actorId], references:[id], onDelete:SetNull) action String target String metadata Json? createdAt DateTime @default(now()) }
