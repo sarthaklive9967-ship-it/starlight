@@ -1,0 +1,15 @@
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_DB: qrforge
+    ports: ["5432:5432"]
+  web:
+    build: .
+    depends_on: [db]
+    environment:
+      DATABASE_URL: postgresql://postgres:postgres@db:5432/qrforge
+      AUTH_SECRET: change-me
+    ports: ["3000:3000"]

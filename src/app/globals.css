@@ -1,0 +1,4 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+:root{--background:220 33% 98%;--foreground:222 47% 11%} .dark{--background:222 47% 6%;--foreground:210 40% 98%} body{background:radial-gradient(circle at top left,rgba(99,102,241,.18),transparent 34%),hsl(var(--background));color:hsl(var(--foreground))}.glass{background:rgba(255,255,255,.72);backdrop-filter:blur(24px);border:1px solid rgba(148,163,184,.28)}.dark .glass{background:rgba(15,23,42,.66)}
