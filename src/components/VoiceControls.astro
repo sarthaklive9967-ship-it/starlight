@@ -1,0 +1,69 @@
+<div class="voice-controls" data-voice-controls>
+	<p class="voice-capability" data-capability></p>
+	<div class="voice-actions">
+		<button type="button" data-ptt>Hold to talk</button>
+		<button type="button" data-wake aria-pressed="false">Enable “Hey Starlight”</button>
+		<button type="button" data-stop>Stop</button>
+	</div>
+	<p role="status" aria-live="polite" data-status>Checking voice capabilities…</p>
+	<label>
+		Response to speak
+		<input data-response value="I heard you. Voice output is ready." />
+	</label>
+	<button type="button" data-speak>Speak response</button>
+</div>
+
+<script>
+	import { SpeechOutputAdapter, VoiceInputAdapter } from '../lib/voice';
+
+	const root = document.querySelector<HTMLElement>('[data-voice-controls]');
+	if (root) {
+		const status = root.querySelector<HTMLElement>('[data-status]')!;
+		const capability = root.querySelector<HTMLElement>('[data-capability]')!;
+		const ptt = root.querySelector<HTMLButtonElement>('[data-ptt]')!;
+		const wake = root.querySelector<HTMLButtonElement>('[data-wake]')!;
+		const stop = root.querySelector<HTMLButtonElement>('[data-stop]')!;
+		const speak = root.querySelector<HTMLButtonElement>('[data-speak]')!;
+		const response = root.querySelector<HTMLInputElement>('[data-response]')!;
+		const output = new SpeechOutputAdapter();
+		const input = new VoiceInputAdapter({ onTranscript: (text) => { status.textContent = `Processing: “${text}”`; } });
+		const cleanups = [
+			input.onStateChange((state, detail) => { status.textContent = detail ? `${state}: ${detail}` : state; }),
+			output.onStateChange((state, detail) => { if (state !== 'idle') status.textContent = detail ? `${state}: ${detail}` : state; }),
+		];
+		capability.textContent = input.capabilities.recognition
+			? `Recognition available. Wake phrase: ${input.capabilities.wakePhrase ? 'available (opt-in)' : 'unavailable'}.`
+			: 'Speech recognition is unavailable; keyboard controls remain available.';
+		wake.disabled = !input.capabilities.wakePhrase;
+		const startPushToTalk = () => void input.startPushToTalk();
+		const stopInput = () => input.stop();
+		const enableWakePhrase = () => void input.enableWakePhrase('hey starlight').then((enabled) => wake.setAttribute('aria-pressed', String(enabled)));
+		const stopAll = () => { input.cancel(); output.cancel(); wake.setAttribute('aria-pressed', 'false'); };
+		const speakResponse = () => output.speak(response.value);
+		ptt.addEventListener('pointerdown', startPushToTalk);
+		for (const event of ['pointerup', 'pointercancel', 'pointerleave']) ptt.addEventListener(event, stopInput);
+		wake.addEventListener('click', enableWakePhrase);
+		stop.addEventListener('click', stopAll);
+		speak.addEventListener('click', speakResponse);
+		window.addEventListener('pagehide', teardown, { once: true });
+		document.addEventListener('astro:before-preparation', teardown, { once: true });
+		function teardown() {
+			for (const event of ['pointerup', 'pointercancel', 'pointerleave']) ptt.removeEventListener(event, stopInput);
+			ptt.removeEventListener('pointerdown', startPushToTalk);
+			wake.removeEventListener('click', enableWakePhrase);
+			stop.removeEventListener('click', stopAll);
+			speak.removeEventListener('click', speakResponse);
+			window.removeEventListener('pagehide', teardown);
+			document.removeEventListener('astro:before-preparation', teardown);
+			cleanups.forEach((cleanup) => cleanup()); input.destroy(); output.destroy();
+		}
+	}
+</script>
+
+<style>
+	.voice-controls { border: 1px solid var(--sl-color-gray-5); border-radius: .75rem; padding: 1rem; display: grid; gap: .85rem; }
+	.voice-actions { display: flex; flex-wrap: wrap; gap: .5rem; }
+	.voice-controls button { padding: .55rem .8rem; }
+	.voice-controls input { display: block; margin-top: .3rem; width: min(100%, 30rem); padding: .45rem; }
+	.voice-capability, [data-status] { margin: 0; }
+</style>
