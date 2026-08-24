@@ -1,0 +1,18 @@
+---
+title: Voice controls
+description: Browser-aware push-to-talk and optional wake phrase controls.
+---
+
+import VoiceControls from '../../../components/VoiceControls.astro';
+
+# Voice controls
+
+Voice is **push-to-talk first**. The microphone is requested only while you hold the button. A wake phrase is a separate opt-in control and is disabled whenever the browser does not expose continuous speech recognition.
+
+<VoiceControls />
+
+## State and lifecycle behavior
+
+The input adapter exposes `microphone-denied`, `microphone-unavailable`, `listening`, `recognition-failure`, `processing`, and `cancelled` states, rather than flattening errors into an ambiguous “off” status. The output adapter separately reports speech progress and failures.
+
+On a control change or route/page teardown, the adapters abort recognition, stop every microphone track, cancel queued speech, clear utterance callbacks, unsubscribe listeners, and release their references. This keeps audio activity scoped to the page that requested it.
